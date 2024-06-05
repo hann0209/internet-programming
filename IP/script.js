@@ -1,6 +1,7 @@
-document.getElementById('searchButton').addEventListener('click', function() {
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    console.log(`Searching for: ${query}`);  // Log the search query
+let allRestaurants = [];  // Global variable to store all restaurant data
+
+// Fetch all restaurants and display them on page load
+window.addEventListener('load', function() {
     fetch('dataset_crawler-google-places_2024-06-03_16-39-31-904 (1).json')
         .then(response => {
             if (!response.ok) {
@@ -9,11 +10,8 @@ document.getElementById('searchButton').addEventListener('click', function() {
             return response.json();
         })
         .then(data => {
-            console.log('Data fetched:', data);  // Log the fetched data
-            const filteredRestaurants = data.filter(restaurant => 
-                restaurant.title.toLowerCase().includes(query)
-            );
-
+            allRestaurants = data;
+            console.log('All Restaurants:', allRestaurants);  // Log all fetched data
             // Sort the filtered restaurants by rating from highest to lowest
             filteredRestaurants.sort((a, b) => b.totalScore - a.totalScore);
 
